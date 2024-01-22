@@ -14,7 +14,17 @@ const closeEl = document.getElementById('close')
 
 let todos = JSON.parse(localStorage.getItem('list')) ? JSON.parse(localStorage.getItem('list')) : []
 // console.log(todos)
+// ssetTodos to Localstorage
+function setTodos() {
+    localStorage.setItem('list', JSON.stringify(todos))
 
+}
+function showMessage(where, message) {
+    document.getElementById(`${where}`).textContent = message
+    setTimeout(() => {
+        document.getElementById(`${where}`).textContent = ''
+    }, 2500)
+}
 
 // get todos
 
@@ -22,12 +32,11 @@ formCreate.addEventListener('click', (e) => {
     e.preventDefault()
 
     const todosText = formCreate['input-create'].value.trim()
+    formCreate.reset()
     if (todosText.length) {
-        console.log(todosText)
+        todos.push({ text: todosText, time: '18:58,21.01.2024', comleted: false })
+        setTodos()
     } else {
-        messageCreate.textContent = "Please,enter some text..."
-        setTimeout(() => {
-            messageCreate.textContent = ''
-        }, 2500)
+        showMessage('message-create', "Please,enter some text...")
     }
 })
